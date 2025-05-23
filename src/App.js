@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Dashboard from "./pages/Dashboard";
+import Books from "./pages/Books";
+import AddBook from "./pages/AddBook";
+import Students from "./pages/Students";
+import AddStudent from "./pages/AddStudent";
+import IssueOrReturn from "./components/IssueOrReturn";
+import IssueBook from "./pages/IssueBook";
+import IssueReturn from "./pages/IssueReturn";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="min-h-screen bg-grey-50">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/books" element={<Books />} />
+          <Route path="/books/add" element={<AddBook />} />
+          <Route path="/students" element={<Students />} />
+          <Route path="/students/add" element={<AddStudent />} />
+          <Route path="/issue-return" element={<IssueOrReturn />} />
+          <Route path="/issue" element={<IssueBook />} />
+          <Route path="/return" element={<IssueReturn />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
