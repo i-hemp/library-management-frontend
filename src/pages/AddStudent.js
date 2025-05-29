@@ -1,6 +1,6 @@
 export default function AddStudent() {
   return (
-    <div className="p-6 max-w-xl">
+    <div className=" p-6 max-w-xl flex flex-col justify-center items-center text-center ">
       <h2 className="text-2xl font-bold mb-4">Add Student</h2>
       <form className="grid grid-cols-1 gap-4">
         <input type="text" placeholder="Name" className="p-2 border rounded" />
