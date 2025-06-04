@@ -1,4 +1,5 @@
-import picone from "./../assets/library_images/lib-pic-3.jpg";
+// import picone from "./../assets/library_images/lib-pic-3.jpg";
+import ImageScroller from "./ImageScroller";
 
 export default function Dashboard() {
   return (
@@ -9,11 +10,16 @@ export default function Dashboard() {
       <p className="text-2xl   gap-2 text-gray-700 justify-center text-center ">
         Welcome to the Library Management System!
       </p>
-      <div
+      {/* <div
+      
         //top-[200px] left-0 w-full h-full bg-center bg-no-repeat
         className="bg-center bg-no-repeat pt-[400px]"
         style={{ backgroundImage: `url(${picone})` }}
-      ></div>
+      >
+        <div>
+        </div>
+        </div> */}
+      <ImageScroller></ImageScroller>
     </div>
   );
 }

@@ -1,20 +1,24 @@
 import { Link } from "react-router-dom";
-import BooksData from "../sample_data/BooksData";
+// import BooksData from "../sample_data/useBooksData";
 import { useState } from "react";
+import Card from "../components/Card";
+// import axios from "axios";
+import { useBooksData } from "../sample_data/useBooksData";
 
 export default function Books() {
   const [searchInput, setSearchInput] = useState("");
+  const books = useBooksData();
+
   const filteredBooksData =
     searchInput !== ""
-      ? BooksData.filter(
+      ? books.filter(
           (book) =>
             book.title.toLowerCase().includes(searchInput.toLowerCase()) ||
             book.author.toLowerCase().includes(searchInput.toLowerCase()) ||
-            book.isbn.toLowerCase().includes(searchInput.toLowerCase()) ||
+            book.isbn.includes(searchInput) ||
             book.category.toLowerCase().includes(searchInput.toLowerCase())
         )
-      : BooksData;
-
+      : books;
   return (
     <div className="p-6 ">
       <div className="flex justify-between items-center mb-4">
@@ -37,26 +41,54 @@ export default function Books() {
       </div>
       <p>List of books will appear here.</p>
       <div>
-        {/* flex flex-row */}
+        {/* <div className="grid gap-4">
+          {books.map((book) => ( */}
+        {/* // "id": 10, // "title": "Clean Code", // "author": "Robert C. Martin",
+        // "available_copies": 4, // "total_copies": 10, // "price": "12.00", //
+        "category": "Software Engineering", // "isbn": null */}
+        {/* <Card
+              key={book.id}
+              data={{
+                title: book.title,
+                author: book.author,
+                category: book.category,
+                isbn: book.isbn,
+                total_copies: book.total_copies,
+                available_copies: book.available_copies,
+              }}
+            />
+          ))} */}
+        {/* </div> */}
         <ul className=" grid grid-flow-row justify-center  gap-2 ">
           {filteredBooksData.map((book) => (
-            <li className="rounded-md p-4 bg-blue-100 border-3 " key={book.id}>
-              <strong>title : </strong>
-              {book.title}
-              <br />
-              <strong>author : </strong>
-              {book.author}
-              <br />
-              <strong>isbn : </strong>
-              {book.isbn}
-              <br />
-              <strong>category : </strong>
-              {book.category}
-              <br />
-              <strong>total_copies : </strong> {book.total_copies}
-              <br />
-              <strong>available_copies : </strong> {book.available_copies}
-            </li>
+            <Card
+              key={book.id}
+              data={{
+                title: book.title,
+                author: book.author,
+                category: book.category,
+                isbn: book.isbn,
+                total_copies: book.total_copies,
+                available_copies: book.available_copies,
+              }}
+            />
+            // <li className=" " key={book.id}>
+            //   <strong>title : </strong>
+            //   {book.title}
+            //   <br />
+            //   <strong>author : </strong>
+            //   {book.author}
+            //   <br />
+            //   <strong>isbn : </strong>
+            //   {book.isbn}
+            //   <br />
+            //   <strong>category : </strong>
+            //   {book.category}
+            //   <br />
+            //   <strong>total_copies : </strong> {book.total_copies}
+            //   <br />
+            //   <strong>available_copies : </strong> {book.available_copies}
+            // </li>
           ))}
         </ul>
       </div>

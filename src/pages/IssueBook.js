@@ -1,23 +1,41 @@
 import { useState } from "react";
-import BooksData from "../sample_data/BooksData";
+import { useBooksData } from "../sample_data/useBooksData";
 import { Link } from "react-router-dom";
-
+import Card from "./../components/Card";
+import axios from "axios";
 const IssueBook = () => {
   const [bookInput, setBookInput] = useState("");
   const [foundedBooks, setFoundedBooks] = useState([]);
+  const books = useBooksData();
 
   const find_book = (e) => {
     e.preventDefault();
-    const result = BooksData.filter(
+    const result = books.filter(
       (book) =>
-        book.title.toLowerCase().includes(bookInput.toLowerCase()) ||
-        book.author.toLowerCase().includes(bookInput.toLowerCase()) ||
-        book.isbn.toLowerCase().includes(bookInput.toLowerCase()) ||
-        book.category.toLowerCase().includes(bookInput.toLowerCase())
+        (book.title !== null &&
+          book.title.toLowerCase().includes(bookInput.toLowerCase())) ||
+        (book.author !== null &&
+          book.author.toLowerCase().includes(bookInput.toLowerCase())) ||
+        (book.isbn !== null &&
+          book.isbn.toLowerCase().includes(bookInput.toLowerCase())) ||
+        (book.category !== null &&
+          book.category.toLowerCase().includes(bookInput.toLowerCase()))
     );
     setFoundedBooks(result);
     console.log(foundedBooks);
-    
+  };
+  const handleIssue = (e, id) => {//not finished
+    // useEffect(() => {
+    axios
+      .post(`http://localhost:5001/api/books/issue/${id}`)
+      .then((res) => {
+        e.target.innerText += " " + res.data.available_copies;
+
+        console.log(res.data);
+      })
+      .catch((err) => console.error(err));
+
+    // },[]);
   };
 
   return (
@@ -46,27 +64,32 @@ const IssueBook = () => {
         <ul className="grid grid-flow-row justify-center gap-2">
           {foundedBooks.map((book) => (
             <li className="rounded-md p-4 bg-blue-100 border-3" key={book.id}>
-              <strong>Title:</strong> {book.title}
-              <br />
-              <strong>Author:</strong> {book.author}
-              <br />
-              <strong>ISBN:</strong> {book.isbn}
-              <br />
-              <strong>Category:</strong> {book.category}
-              <br />
-              <strong>Total Copies:</strong> {book.total_copies}
-              <br />
-              <strong>Available Copies:</strong> {book.available_copies}
+              <Card
+                key={book.id}
+                data={{
+                  title: book.title,
+                  author: book.author,
+                  category: book.category,
+                  isbn: book.isbn,
+                  total_copies: book.total_copies,
+                  available_copies: book.available_copies,
+                }}
+              />
+              <button onClick={(e) => handleIssue(e, book.id)}>Issue</button>
             </li>
           ))}
         </ul>
       ) : (
         console.log(foundedBooks)
       )}
-      <Link to={'/return'} className="text-gray-500 text-sm width-30px cursor-pointer ">Want to return book?</Link>
+      <Link
+        to={"/return"}
+        className="text-gray-500 text-sm width-30px cursor-pointer "
+      >
+        Want to return book?
+      </Link>
     </div>
-  
-);
+  );
 };
 
 export default IssueBook;

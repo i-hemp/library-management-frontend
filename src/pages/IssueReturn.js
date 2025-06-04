@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import BooksData from "../sample_data/BooksData";
+import {useBooksData} from "../sample_data/useBooksData";
 
 const IssueReturn = () => {
   const [bookInput, setBookInput] = useState("");
+  const books=useBooksData()
   const [foundedBooks, setFoundedBooks] = useState([]);
    const find_book = (e) => {
     e.preventDefault();
-    const result = BooksData.filter(
+    const result = books.filter(
       (book) =>
         book.title.toLowerCase().includes(bookInput.toLowerCase()) ||
         book.author.toLowerCase().includes(bookInput.toLowerCase()) ||

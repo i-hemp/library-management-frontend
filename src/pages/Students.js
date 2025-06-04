@@ -1,12 +1,22 @@
 import { Link } from "react-router-dom";
-import StudentsData from "../sample_data/StudentsData";
-import { useState } from "react";
+// import StudentsData from "../sample_data/StudentsData";
+import { useEffect, useState } from "react";
+import Card from "../components/Card";
+import axios from "axios";
 
 export default function Students() {
   const [searchInput, setSearchInput] = useState("");
+  const [students, setStudents] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5001/api/students/all")
+      .then((res) => setStudents(res.data))
+      .catch((err) => console.log(err));
+  }, []);
   const filteredStudentsData =
     searchInput !== ""
-      ? StudentsData.filter(
+      ? students.filter(
           (student) =>
             student.name.toLowerCase().includes(searchInput.toLowerCase()) ||
             student.roll_number
@@ -18,10 +28,10 @@ export default function Students() {
             student.semester
               .toLowerCase()
               .includes(searchInput.toLowerCase()) ||
-            student.phone.toLowerCase().includes(searchInput.toLowerCase()) ||
+            student.phone.includes(searchInput) ||
             student.email.toLowerCase().includes(searchInput.toLowerCase())
         )
-      : StudentsData;
+      : students;
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-4">
@@ -42,21 +52,38 @@ export default function Students() {
         </Link>
       </div>
       <p>List of students will appear here.</p>
+      {/* <div className="grid gap-4">
+        {filteredStudentsData.map((student) => (
+          
+        ))}
+      </div> */}
       <ul className=" grid grid-flow-row justify-center  gap-2 ">
         {filteredStudentsData.map((student) => (
-          <li key={student.id} className="rounded-md p-4 bg-blue-100 border-3 ">
-            <strong>name : </strong> {student.name}
-            <br />
-            <strong>roll_number : </strong> {student.roll_number}
-            <br />
-            <strong>department : </strong> {student.department}
-            <br />
-            <strong>semester : </strong> {student.semester}
-            <br />
-            <strong>phone : </strong> {student.phone}
-            <br />
-            <strong>email : </strong> {student.email}
+          <li key={student.id}>
+            <Card
+              data={{
+                Student: student.name,
+                "Roll Number": student.roll_number,
+                Department: student.department,
+                Semester: student.semester,
+                Phone: student.phone,
+                Email: student.email,
+              }}
+            />
           </li>
+          //   <li key={student.id} className="rounded-md p-4 bg-blue-100 border-3 ">
+          //     <strong>name : </strong> {student.name}
+          //     <br />
+          //     <strong>roll_number : </strong> {student.roll_number}
+          //     <br />
+          //     <strong>department : </strong> {student.department}
+          //     <br />
+          //     <strong>semester : </strong> {student.semester}
+          //     <br />
+          //     <strong>phone : </strong> {student.phone}
+          //     <br />
+          //     <strong>email : </strong> {student.email}
+          //   </li>
         ))}
       </ul>
     </div>

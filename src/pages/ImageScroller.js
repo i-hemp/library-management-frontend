@@ -11,7 +11,7 @@ export default function ImageScroller() {
 
   return (
     <div className="w-full overflow-hidden">
-      <div className="bg-gray-200 p-3 flex animate-scroll whitespace-nowrap">
+      <div className="p-3 flex animate-scroll whitespace-nowrap">
         {images.concat(images).map((img, index) => (
           <img
             key={index}

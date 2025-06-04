@@ -25,10 +25,8 @@ function App() {
           <Route path="/issue" element={<IssueBook />} />
           <Route path="/return" element={<IssueReturn />} />
           <Route path="/images" element={<ImageScroller />} />
-
         </Routes>
       </div>
-      <ImageScroller></ImageScroller>
     </Router>
   );
 }

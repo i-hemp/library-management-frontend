@@ -1,14 +1,111 @@
+import axios from "axios";
+import React from "react";
+import { useState } from "react";
+
+//                title: book.title,
+//               author: book.author,
+//               category: book.category,
+//               isbn: book.isbn,
+//               total_copies: book.total_copies,
+//               available_copies: book.available_copies,
 export default function AddBook() {
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
+  const [total_copies, setTotal_copies] = useState(0);
+  const [available_copies, setAvailable_copies] = useState(0);
+  const [isbn, setIsbn] = useState("");
+
+  const handleAddBook = (e) => {
+    e.preventDefault();
+    console.log(e);
+    try {
+      const res = axios.post("http://localhost:5001/api/books/", {
+        title: title,
+        author: author,
+        isbn: isbn,
+        category: category,
+        total_copies: total_copies,
+        available_copies: total_copies,
+        price:price,
+      });
+      console.log("Book added:", res.data);
+      alert("Book added successfully!");
+
+      // Clear form after successful submission
+      setTitle("");
+      setAuthor("");
+      setIsbn("");
+      setCategory("");
+      setTotal_copies(1);
+      setAvailable_copies(1);
+      setPrice(0)
+    } catch (err) {
+      console.log(`Error adding book: ${err}`);
+      alert("Failed to add book. Check console for errors.");
+    }
+  };
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">Add Book</h2>
-      <form className="grid grid-cols-2 gap-4">
-        <input type="text" placeholder="Title" className="p-2 border rounded" />
-        <input type="text" placeholder="Author" className="p-2 border rounded" />
-        <input type="text" placeholder="ISBN" className="p-2 border rounded" />
-        <input type="text" placeholder="Category" className="p-2 border rounded" />
-        <input type="number" placeholder="Number of Copies" className="p-2 border rounded" />
-        <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded col-span-2">
+      <form
+        className="grid grid-cols-2 gap-4"
+        onSubmit={(e) => handleAddBook(e)}
+      >
+        <input
+          type="text"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="p-2 border rounded"
+        />
+        <input
+          type="text"
+          value={author}
+          placeholder="Author"
+          onChange={(e) => setAuthor(e.target.value)}
+          className="p-2 border rounded"
+        />
+        <input
+          type="text"
+          onChange={(e) => setIsbn(e.target.value)}
+          placeholder="ISBN"
+          value={isbn}
+          className="p-2 border rounded"
+        />
+        <input
+          type="text"
+          placeholder="Category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="p-2 border rounded"
+        />
+        <input
+          type="number"
+          placeholder="Total Copies"
+          value={total_copies}
+          onChange={(e) => setTotal_copies(parseInt(e.target.value))}
+          className="p-2 border rounded"
+        />
+        <input
+          type="number"
+          placeholder="Price"
+          value={price}
+          onChange={(e) => setPrice(parseInt(e.target.value))}
+          className="p-2 border rounded"
+        />
+        <input
+          type="number"
+          placeholder="Available Copies"
+          value={available_copies}
+          onChange={(e) => setAvailable_copies(parseInt(e.target.value))}
+          className="p-2 border rounded"
+        />
+        <button
+          type="submit"
+          className="bg-green-600 text-white px-4 py-2 rounded col-span-2"
+        >
           Save Book
         </button>
       </form>
