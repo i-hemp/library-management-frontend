@@ -8,7 +8,9 @@ import AddStudent from "./pages/AddStudent";
 import IssueOrReturn from "./components/IssueOrReturn";
 import IssueBook from "./pages/IssueBook";
 import IssueReturn from "./pages/IssueReturn";
+import Details from "./pages/Details";
 import ImageScroller from "./pages/ImageScroller";
+import StudentsEdit from "./pages/StudentsEdit";
 
 function App() {
   return (
@@ -20,11 +22,15 @@ function App() {
           <Route path="/books" element={<Books />} />
           <Route path="/books/add" element={<AddBook />} />
           <Route path="/students" element={<Students />} />
+          <Route path="/studentsedit/:id" element={<StudentsEdit />} />
           <Route path="/students/add" element={<AddStudent />} />
           <Route path="/issue-return" element={<IssueOrReturn />} />
           <Route path="/issue" element={<IssueBook />} />
           <Route path="/return" element={<IssueReturn />} />
           <Route path="/images" element={<ImageScroller />} />
+          <Route path="/logdetails/:id" element={<Details />} />
+          
+
         </Routes>
       </div>
     </Router>

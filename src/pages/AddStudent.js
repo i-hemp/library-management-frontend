@@ -67,6 +67,7 @@ export default function AddStudent() {
           type="text"
           placeholder="Semester"
           value={semester}
+          
           onChange={(e) => setSemester(e.target.value)}
           className="p-2 border rounded"
         />

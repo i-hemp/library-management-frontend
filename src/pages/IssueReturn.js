@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import {useBooksData} from "../sample_data/useBooksData";
+import { useBooksData } from "../sample_data/useBooksData";
+import Card from "../components/Card";
+import axios from "axios";
 
 const IssueReturn = () => {
   const [bookInput, setBookInput] = useState("");
-  const books=useBooksData()
+  const books = useBooksData();
   const [foundedBooks, setFoundedBooks] = useState([]);
-   const find_book = (e) => {
+  // const student_id = 1;
+
+  const find_book = (e) => {
     e.preventDefault();
     const result = books.filter(
       (book) =>
@@ -17,8 +21,21 @@ const IssueReturn = () => {
     );
     setFoundedBooks(result);
     console.log(foundedBooks);
-    
   };
+  const handleStudentReturn = (bookId) => {
+    const studentId = prompt("Enter Id:", "0");
+    const numberStudentId = Number.parseInt(studentId); // fixed variable name
+    console.log(`studentID: ${numberStudentId}, bookID: ${bookId}`);
+    try {
+      axios.post(`http://localhost:5001/api/books/return/${bookId}`, {
+        student_id: numberStudentId,
+      });
+      alert("Sucess")
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="grid grid-flow-row gap-4 text-2xl p-6 items-center justify-center text-center">
       <p>Looking for which book?</p>
@@ -45,26 +62,33 @@ const IssueReturn = () => {
         <ul className="grid grid-flow-row justify-center gap-2">
           {foundedBooks.map((book) => (
             <li className="rounded-md p-4 bg-blue-100 border-3" key={book.id}>
-              <strong>Title:</strong> {book.title}
-              <br />
-              <strong>Author:</strong> {book.author}
-              <br />
-              <strong>ISBN:</strong> {book.isbn}
-              <br />
-              <strong>Category:</strong> {book.category}
-              <br />
-              <strong>Total Copies:</strong> {book.total_copies}
-              <br />
-              <strong>Available Copies:</strong> {book.available_copies}
+              <Card
+                key={book.id}
+                data={{
+                  title: book.title,
+                  author: book.author,
+                  isbn: book.isbn,
+                  category: book.category,
+                  total_copies: book.total_copies,
+                  available_copies: book.available_copies,
+                }}
+              />
+              <button onClick={() => handleStudentReturn(book.id)}>
+                Return Book
+              </button>
             </li>
           ))}
         </ul>
       ) : (
         console.log(foundedBooks)
       )}
-      <Link to={'/issue'} className="text-gray-500 text-sm width-30px cursor-pointer ">Want to issue book?</Link>
+      <Link
+        to={"/issue"}
+        className="text-gray-500 text-sm width-30px cursor-pointer "
+      >
+        Want to issue book?
+      </Link>
     </div>
-  
   );
 };
 

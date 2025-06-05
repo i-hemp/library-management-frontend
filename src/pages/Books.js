@@ -64,6 +64,7 @@ export default function Books() {
             <Card
               key={book.id}
               data={{
+                id:book.id,
                 title: book.title,
                 author: book.author,
                 category: book.category,

@@ -27,7 +27,7 @@ export default function AddBook() {
         isbn: isbn,
         category: category,
         total_copies: total_copies,
-        available_copies: total_copies,
+        available_copies: available_copies,
         price:price,
       });
       console.log("Book added:", res.data);

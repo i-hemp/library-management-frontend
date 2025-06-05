@@ -3,22 +3,16 @@ import ImageScroller from "./ImageScroller";
 
 export default function Dashboard() {
   return (
-    <div>
-      <h2 className="text-7xl  p-2 gap-2 text-gray-700  justify-center text-center ">
-        Dashboard
-      </h2>
-      <p className="text-2xl   gap-2 text-gray-700 justify-center text-center ">
-        Welcome to the Library Management System!
-      </p>
-      {/* <div
-      
-        //top-[200px] left-0 w-full h-full bg-center bg-no-repeat
-        className="bg-center bg-no-repeat pt-[400px]"
-        style={{ backgroundImage: `url(${picone})` }}
-      >
-        <div>
-        </div>
-        </div> */}
+    <div className="justify-between flex flex-col">
+      <div className="text">
+        <h2 className="text-7xl  p-2 gap-2 text-gray-700  justify-center text-center ">
+          Dashboard
+        </h2>
+        <p className="text-2xl   gap-2 text-gray-700 justify-center text-center ">
+          Welcome ,Admin!
+        </p>
+      </div>
+
       <ImageScroller></ImageScroller>
     </div>
   );
@@ -33,3 +27,13 @@ export default function Dashboard() {
 //   height: "300px",
 //   width: "100%",
 // }}
+
+// {/* <div
+
+//   //top-[200px] left-0 w-full h-full bg-center bg-no-repeat
+//   className="bg-center bg-no-repeat pt-[400px]"
+//   style={{ backgroundImage: `url(${picone})` }}
+// >
+//   <div>
+//   </div>
+//   </div> */}
