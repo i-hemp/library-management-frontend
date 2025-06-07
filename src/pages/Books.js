@@ -8,6 +8,8 @@ import BookCard from "../components/BookCard";
 export default function Books() {
   const [searchInput, setSearchInput] = useState("");
   const [books, setBooks] = useState([]);
+
+  // eslint-disable-next-line no-unused-vars
   const [issueLog, setIssueLog] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState("All");
 

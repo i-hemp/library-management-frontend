@@ -26,14 +26,18 @@ const IssueBook = () => {
     console.log(foundedBooks);
   };
   const handleIssue = (e, id) => {
+    const studentId = prompt("Enter Id:", "0");
+    const numberStudentId = Number.parseInt(studentId); 
     //not finished
     // useEffect(() => {
     axios
-      .post(`http://localhost:5001/api/books/issue/${id}`)
+      .post(`http://localhost:5001/api/books/issue/${id}/${numberStudentId}`)
       .then((res) => {
-        e.target.innerText += " " + res.data.available_copies;
-
+        // e.target.innerText += " " + res.data.available_copies;
+        window.alert("Success")
         console.log(res.data);
+      // alert("Now Available:",res.data.available_copies)
+
       })
       .catch((err) => console.error(err));
 

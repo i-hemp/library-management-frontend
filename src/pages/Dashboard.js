@@ -1,5 +1,5 @@
 // import picone from "./../assets/library_images/lib-pic-3.jpg";
-import ImageScroller from "./ImageScroller";
+// import ImageScroller from "./ImageScroller";
 import picone from "./../assets/new_images/eliza-ari-RLgRAhTD4ww-unsplash.jpg";
 
 export default function Dashboard() {
