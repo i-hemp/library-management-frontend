@@ -40,15 +40,17 @@ const StudentsEdit = () => {
         alert("Student updated successfully\n You can close window..!");
 
         handleCancel();
+        window.location.reload();
       })
       .catch((err) => console.error("Update failed:", err));
   };
   const handleCancel = () => {
     window.close();
     navigate("/students");
+    
   };
   return (
-    <div className="ml-8 mt-10 p-10 ">
+    <div className="ml-8 mt-10 p-10 pt-20 px-4 ">
       <h2 className="text-xl font-bold mb-4">Edit Student Info</h2>
       <form onSubmit={handleSubmit} className="p-4">
         {[

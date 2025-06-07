@@ -10,7 +10,7 @@ export default function ImageScroller() {
   const images = [img1, img2, img3, img4, img5, img6, img7];
 
   return (
-    <div className="w-full overflow-hidden">
+    <div className=" pt-20 px-4 w-full overflow-hidden">
       <div className="p-3 flex animate-scroll whitespace-nowrap">
         {images.concat(images).map((img, index) => (
           <img

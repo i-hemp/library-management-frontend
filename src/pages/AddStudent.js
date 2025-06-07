@@ -39,7 +39,7 @@ export default function AddStudent() {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6 pt-20 px-4 ">
       <h2 className="text-2xl font-bold mb-4">Add Student</h2>
       <form className="grid grid-cols-2 gap-4" onSubmit={handleAddStudent}>
         <input

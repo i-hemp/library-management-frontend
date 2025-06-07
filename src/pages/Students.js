@@ -1,13 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
-// import StudentsData from "../sample_data/StudentsData";
 import { useEffect, useState } from "react";
-import Card from "../components/Card";
 import axios from "axios";
+import picone from "./../assets/new_images/pexels-adnan-yahya-abdo-alward-1797136-7273787.jpg"
+import StudentCard from "../components/StudentCard";
 
 export default function Students() {
   const [searchInput, setSearchInput] = useState("");
   const [students, setStudents] = useState([]);
-  const [issueLog, setIssueLog] = useState([]);
+  const [departmentFilter, setDepartmentFilter] = useState("All");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -15,83 +17,74 @@ export default function Students() {
       .then((res) => setStudents(res.data))
       .catch((err) => console.log(err));
   }, []);
+
   const handleLog = (student_id) => {
-    console.log(student_id);
     navigate(`/logdetails/${student_id}`);
-
-    // axios
-    //   .get(`http://localhost:5001/api/books/issue/logs/${student_id}`)
-    //   .then((res) => {
-    //     setIssueLog(res.data);
-    //     console.log(res.data.length);
-
-    //     console.log(issueLog);
-    //   })
-    //   .catch((err) => console.error(err));
   };
-  const filteredStudentsData =
-    searchInput !== ""
-      ? students.filter(
-          (student) =>
-            student.name.toLowerCase().includes(searchInput.toLowerCase()) ||
-            student.roll_number
-              .toLowerCase()
-              .includes(searchInput.toLowerCase()) ||
-            student.department
-              .toLowerCase()
-              .includes(searchInput.toLowerCase()) ||
-            student.semester
-              .toLowerCase()
-              .includes(searchInput.toLowerCase()) ||
-            student.phone.includes(searchInput) ||
-            student.email.toLowerCase().includes(searchInput.toLowerCase())
-        )
-      : students;
 
-  const navigate = useNavigate();
+  const handleEdit = (student_id) => {
+    navigate(`/studentsedit/${student_id}`);
+  };
+
   const handleDelete = (student_id) => {
-    // e.preventDefault()
-    console.log(student_id);
-
-    //check any logs
-    // useEffect(()=>{
-
     axios
       .get(`http://localhost:5001/api/books/issue/logs/${student_id}`)
-      .then((res) => setIssueLog(res.data))
+      .then((res) => {
+        if (res.data.length === 0) {
+          axios
+            .delete(`http://localhost:5001/api/students/${student_id}`)
+            .then(() => {
+              alert("Student deleted successfully");
+              setStudents(students.filter((s) => s.id !== student_id));
+            })
+            .catch((err) => console.log(err));
+        } else {
+          alert("Student has issue logs, can't delete!");
+        }
+      })
       .catch((err) => console.log(err));
-    // },[student_id])
-    console.log(issueLog.length);
-    console.log(issueLog);
-    if (issueLog.length === 0) {
-      try {
-        axios.delete(`http://localhost:5001/api/students/${student_id}`);
-        alert("Success");
-        // window.location.reload();
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      alert("Student have book issue logs!!!");
-    }
   };
 
-  const handleEdit=(id)=>{
-    navigate(`/studentsedit/${id}`)
-     
-  }
+  const filteredStudents = students.filter((student) => {
+    const matchesSearch =
+      student.name.toLowerCase().includes(searchInput.toLowerCase()) ||
+      student.email.toLowerCase().includes(searchInput.toLowerCase()) ||
+      student.id.toString().includes(searchInput);
+
+    const matchesDept =
+      departmentFilter === "All" || student.department === departmentFilter;
+
+    return matchesSearch && matchesDept;
+  });
+
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Students</h2>
-        <input
-          type="text"
-          placeholder="Search students..."
-          value={searchInput}
-          onChange={(e) => {
-            setSearchInput(e.target.value);
-          }}
-        />
+    <div
+      className="flex flex-col items-center pt-20 px-4 w-full min-h-screen bg-fixed bg-center bg-cover"
+      style={{ backgroundImage: `url(${picone})` }}
+    >
+      <div className="flex pb-5 flex-row items-center justify-between gap-60">
+        <h2 className="text-2xl text-white ml-20 font-bold">Students</h2>
+        <div className="flex flex-row gap-3">
+          <input
+            type="text"
+            placeholder="Search students..."
+            value={searchInput}
+            className="rounded-md px-2 py-2"
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
+          <select
+            value={departmentFilter}
+            onChange={(e) => setDepartmentFilter(e.target.value)}
+            className="px-3 py-2 rounded-md border border-gray-300"
+          >
+            <option value="All">All Departments</option>
+            {[...new Set(students.map((s) => s.department))].map((dept) => (
+              <option key={dept} value={dept}>
+                {dept}
+              </option>
+            ))}
+          </select>
+        </div>
         <Link
           to="/students/add"
           className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500"
@@ -99,66 +92,25 @@ export default function Students() {
           + Add Student
         </Link>
       </div>
-      <p>List of students will appear here.</p>
-      {/* <div className="grid gap-4">
-        {filteredStudentsData.map((student) => (
-          
-        ))}
-      </div> */}
-      <ul className=" grid grid-flow-row justify-center  gap-2 ">
-        {filteredStudentsData.map((student) => (
-          <li className="flex " key={student.id}>
-            <Card
+
+      <ul className="grid grid-cols-1 md:grid-cols-1 gap-4 justify-items-center w-full max-w-6xl mx-auto">
+        {filteredStudents.map((student) => (
+          <li className="flex group" key={student.id}>
+            <StudentCard
               data={{
                 id: student.id,
-                Student: student.name,
-                "Roll Number": student.roll_number,
-                Department: student.department,
-                Semester: student.semester,
-                Phone: student.phone,
+                Name: student.name,
                 Email: student.email,
+                Department: student.department,
               }}
+              onDelete={() => handleDelete(student.id)}
+              onLog={() => handleLog(student.id)}
+              onEdit={() => handleEdit(student.id)}
             />
-            <div className="options">
-              <p>Actions</p>
-              <button onClick={() => handleLog(student.id)}>Check log</button>
-              <br />
-              <button onClick={() => handleDelete(student.id)}>
-                Delete Student
-              </button><br/>
-              <button onClick={()=>{handleEdit(student.id)}}>Edit</button>
-            </div>
           </li>
-          //   <li key={student.id} className="rounded-md p-4 bg-blue-100 border-3 ">
-          //     <strong>name : </strong> {student.name}
-          //     <br />
-          //     <strong>roll_number : </strong> {student.roll_number}
-          //     <br />
-          //     <strong>department : </strong> {student.department}
-          //     <br />
-          //     <strong>semester : </strong> {student.semester}
-          //     <br />
-          //     <strong>phone : </strong> {student.phone}
-          //     <br />
-          //     <strong>email : </strong> {student.email}
-          //   </li>
         ))}
       </ul>
-      <div style={{ flex: 1 }}>
-        <h3>Issue Logs</h3>
-        {issueLog.length > 0 ? (
-          <ul>
-            {issueLog.map((log, i) => (
-              <li key={i}>
-                Book ID: {log.book_id}, Issue Date: {log.issue_date}, Return
-                Date: {log.return_date}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No issue logs available</p>
-        )}
-      </div>
+      <div className="pb-20"></div>
     </div>
   );
 }

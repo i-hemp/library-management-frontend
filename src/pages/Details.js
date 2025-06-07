@@ -22,7 +22,7 @@ const DetailPage = () => {
   }, [id, issueLog]);
 
   return (
-    <div className="p-4">
+    <div className="p-4  pt-20 px-4 ">
       <h2>Detail Page</h2>
       <p>Showing details for ID: {id}</p>
       <ul>

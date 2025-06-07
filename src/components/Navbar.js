@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import img from "./../assets/dashboard/lms.jpeg";
+import img from "./../assets/new_images/library.png";
 
 function Navbar() {
   const location = useLocation();
@@ -10,8 +10,9 @@ function Navbar() {
       currentPath === path ? "border-white" : "border-transparent"
     }`;
   return (
-    <nav className="justify-between bg-gray-500 text-white p-2 flex justify-end p-r-20px">
-      <img src={img} alt="home" className="w-20 " />
+    <nav className="text-white  fixed top-0 left-0 right-0      justify-between bg-gradient-to-r to-[#19547b]  from-[#ffd89b] p-2 flex justify-end p-r-20px"
+    >
+      <img src={img} alt="home" className="w-7" />
       <div className="gap-3 flex ">
         <Link className={linkClass("/")} to="/">
           Dashboard

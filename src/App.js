@@ -11,6 +11,9 @@ import IssueReturn from "./pages/IssueReturn";
 import Details from "./pages/Details";
 import ImageScroller from "./pages/ImageScroller";
 import StudentsEdit from "./pages/StudentsEdit";
+import BookIssueLog from "./pages/BookIssueLog";
+import BooksEdit from "./pages/BooksEdit";
+import BookCard from "./components/BookCard";
 
 function App() {
   return (
@@ -18,9 +21,19 @@ function App() {
       <div className="min-h-screen bg-grey-50">
         <Navbar />
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route
+            path="/"
+            element={
+              <>
+                <Navbar />
+                <Dashboard />
+              </>
+            }
+          />
           <Route path="/books" element={<Books />} />
           <Route path="/books/add" element={<AddBook />} />
+          <Route path="/booklog/:id" element={<BookIssueLog />} />
+          <Route path="/booksedit/:id" element={<BooksEdit />} />
           <Route path="/students" element={<Students />} />
           <Route path="/studentsedit/:id" element={<StudentsEdit />} />
           <Route path="/students/add" element={<AddStudent />} />
@@ -29,8 +42,7 @@ function App() {
           <Route path="/return" element={<IssueReturn />} />
           <Route path="/images" element={<ImageScroller />} />
           <Route path="/logdetails/:id" element={<Details />} />
-          
-
+          <Route path="/test" element={<BookCard />} />
         </Routes>
       </div>
     </Router>

@@ -37,7 +37,7 @@ const IssueReturn = () => {
   };
 
   return (
-    <div className="grid grid-flow-row gap-4 text-2xl p-6 items-center justify-center text-center">
+    <div className=" pt-20 px-4 grid grid-flow-row gap-4 text-2xl p-6 items-center justify-center text-center">
       <p>Looking for which book?</p>
       <div className="rounded-md p-4 bg-green-100 border-3 w-fit h-fit">
         <form onSubmit={find_book} className="flex gap-4 p-4">

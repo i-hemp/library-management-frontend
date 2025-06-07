@@ -11,7 +11,7 @@ const Issuelog = () => {
   }, []);
   
   return (
-    <div className="text-gray-400 ">
+    <div className="text-gray-400  pt-20 px-4 ">
       <ul>
         {dataIssued.map((item, index) => (
           <li key={index} className="">
