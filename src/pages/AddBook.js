@@ -23,7 +23,7 @@ export default function AddBook() {
     e.preventDefault();
     console.log(e);
     try {
-      const res = axios.post("http://localhost:5001/api/books/", {
+      const res = axios.post(`${process.env.BACKEND_URL}/api/books/`, {
         title: title,
         author: author,
         isbn: isbn,

@@ -13,7 +13,7 @@ const DetailPage = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5001/api/books/issue/logs/${id}`)
+      .get(`${process.env.BACKEND_URL}/api/books/issue/logs/${id}`)
       .then((res) => {
         setIssueLog(res.data);
         // console.log(issueLog);

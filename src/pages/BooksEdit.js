@@ -17,7 +17,7 @@ const BooksEdit = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5001/api/books/${id}`)
+      .get(`${process.env.BACKEND_URL}/api/books/${id}`)
       .then((res) => setBookInfo(res.data))
       .catch((err) => console.error(err));
   }, [id]);
@@ -33,7 +33,7 @@ const BooksEdit = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`http://localhost:5001/api/books/put/${id}`, bookInfo)
+      .put(`${process.env.BACKEND_URL}/api/books/put/${id}`, bookInfo)
       .then(() => {
         alert("Book updated successfully\nYou can close window..!");
         handleCancel();

@@ -13,7 +13,7 @@ export default function Students() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5001/api/students/all")
+      .get(`${process.env.BACKEND_URL}/api/students/all`)
       .then((res) => setStudents(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -28,11 +28,11 @@ export default function Students() {
 
   const handleDelete = (student_id) => {
     axios
-      .get(`http://localhost:5001/api/books/issue/logs/${student_id}`)
+      .get(`${process.env.BACKEND_URL}/api/books/issue/logs/${student_id}`)
       .then((res) => {
         if (res.data.length === 0) {
           axios
-            .delete(`http://localhost:5001/api/students/${student_id}`)
+            .delete(`${process.env.BACKEND_URL}/api/students/${student_id}`)
             .then(() => {
               alert("Student deleted successfully");
               setStudents(students.filter((s) => s.id !== student_id));

@@ -31,7 +31,7 @@ const IssueBook = () => {
     //not finished
     // useEffect(() => {
     axios
-      .post(`http://localhost:5001/api/books/issue/${id}/${numberStudentId}`)
+      .post(`${process.env.BACKEND_URL}/api/books/issue/${id}/${numberStudentId}`)
       .then((res) => {
         // e.target.innerText += " " + res.data.available_copies;
         window.alert("Success")

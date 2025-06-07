@@ -5,7 +5,7 @@ const Issuelog = () => {
   const [dataIssued, setDataIssued] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:5001/api/books/issue/logs")
+      .get(`${process.env.BACKEND_URL}/api/books/issue/logs`)
       .then((res) => setDataIssued(res.data))
       .catch((err) => console.error(err));
   }, []);
