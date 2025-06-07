@@ -17,7 +17,7 @@ export default function Books() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.BACKEND_URL}/api/books/all`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/books/all`)
       .then((res) => setBooks(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -32,12 +32,12 @@ export default function Books() {
 
   const handleDelete = (book_id) => {
     axios
-      .get(`${process.env.BACKEND_URL}/api/books/issue/logs/book/${book_id}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/books/issue/logs/book/${book_id}`)
       .then((res) => {
         setIssueLog(res.data);
         if (res.data.length === 0) {
           axios
-            .delete(`${process.env.BACKEND_URL}/api/books/${book_id}`)
+            .delete(`${process.env.REACT_APP_BACKEND_URL}/api/books/${book_id}`)
             .then(() => {
               alert("Book deleted successfully");
               setBooks(books.filter((b) => b.id !== book_id));

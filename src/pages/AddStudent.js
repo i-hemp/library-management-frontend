@@ -13,7 +13,7 @@ export default function AddStudent() {
     e.preventDefault();
 
     try {
-      const res = await axios.post(`${process.env.BACKEND_URL}/api/students/`, {
+      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/students/`, {
         roll_number: rollNumber,
         name:name,
         department:department,

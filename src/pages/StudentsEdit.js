@@ -17,7 +17,7 @@ const StudentsEdit = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.BACKEND_URL}/api/students/${id}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/students/${id}`)
       .then((res) => setStudentInfo(res.data))
       .catch((err) => console.log(err));
   }, [id]);
@@ -35,7 +35,7 @@ const StudentsEdit = () => {
     console.log(studentInfo);
 
     axios
-      .put(`${process.env.BACKEND_URL}/api/students/${id}`, studentInfo)
+      .put(`${process.env.REACT_APP_BACKEND_URL}/api/students/${id}`, studentInfo)
       .then(() => {
         alert("Student updated successfully\n You can close window..!");
 

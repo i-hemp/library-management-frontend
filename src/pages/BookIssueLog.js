@@ -12,7 +12,7 @@ console.log(id);
 
     axios
     
-      .get(`${process.env.BACKEND_URL}/api/books/issue/logs/book/${id}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/books/issue/logs/book/${id}`)
       .then((res) => setDataIssued(res.data))
       .catch((err) => console.error(err));
   }, [id]);

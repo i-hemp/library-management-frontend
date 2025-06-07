@@ -312,7 +312,7 @@ export const useBooksData = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.BACKEND_URL}/api/books/all`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/books/all`)
       .then((res) => setServerBooksData(res.data))
       .catch((err) => console.error(err));
   }, []); 
