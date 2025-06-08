@@ -105,7 +105,6 @@ export default function AddStudent() {
             className="p-2 border ml-5 rounded"
           />
         </div>
-      </form>
       <div className="text-center mt-5">
         <button
           type="submit"
@@ -114,6 +113,7 @@ export default function AddStudent() {
           Save Student
         </button>
       </div>
+      </form>
     </div>
   );
 }

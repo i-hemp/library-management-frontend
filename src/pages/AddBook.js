@@ -132,7 +132,6 @@ export default function AddBook() {
             className="p-2 ml-5 border rounded"
           />
         </div>
-      </form>
       <div className="text-center mt-5">
         <button
           type="submit"
@@ -141,6 +140,7 @@ export default function AddBook() {
           Save Book
         </button>
       </div>
+      </form>
     </div>
   );
 }
