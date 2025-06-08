@@ -23,8 +23,11 @@ function Navbar() {
         <Link className={linkClass("/students")} to="/students">
           Students
         </Link>
-        <Link className={linkClass("/issue-return")} to="/issue-return">
-          Issue/Return
+        <Link className={linkClass("/issue")} to="/issue">
+          Issue
+        </Link>
+        <Link className={linkClass("/return")} to="/return">
+          Return
         </Link>
       </div>
     </nav>

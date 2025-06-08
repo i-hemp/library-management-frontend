@@ -62,9 +62,10 @@ export default function Students() {
       className="flex flex-col items-center pt-20 px-4 w-full min-h-screen bg-fixed bg-center bg-cover"
       style={{ backgroundImage: `url(${picone})` }}
     >
-      <div className="flex pb-5 flex-row items-center justify-between gap-60">
-        <h2 className="text-2xl text-white ml-20 font-bold">Students</h2>
-        <div className="flex flex-row gap-3">
+      <div className="flex pb-5 flex-row items-center justify-between gap-60" style={{width:"100%"}}>
+        <h2 className="text-2xl text-white ml-5 font-bold">Students</h2>
+        <div className="flex">
+        <div className="flex flex-row gap-3 mr-5">
           <input
             type="text"
             placeholder="Search students..."
@@ -91,11 +92,13 @@ export default function Students() {
         >
           + Add Student
         </Link>
+        </div>
+
       </div>
 
-      <ul className="grid grid-cols-1 md:grid-cols-1 gap-4 justify-items-center w-full max-w-6xl mx-auto">
+      <ul className="grid grid-cols-2 md:grid-cols-2 gap-4 justify-items-center  mx-auto">
         {filteredStudents.map((student) => (
-          <li className="flex group" key={student.id}>
+          <li className="flex group " style={{width:"100%"}} key={student.id}>
             <StudentCard
               data={{
                 id: student.id,

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import picone from "./../assets/new_images/vecteezy_person-man-holding-pen-write-plan-or-idea-on-book-with_10111102.jpg";
 
 const BooksEdit = () => {
   const { id } = useParams();
@@ -49,6 +50,7 @@ const BooksEdit = () => {
   };
 
   return (
+    <div className="flex">
     <div className="ml-8 mt-10 p-10 pt-20 px-4 ">
       <h2 className="text-xl font-bold mb-4">Edit Book Info</h2>
       <form onSubmit={handleSubmit} className="p-4">
@@ -67,7 +69,7 @@ const BooksEdit = () => {
               name={field.name}
               value={bookInfo[field.name] || ""}
               onChange={handleChange}
-              className="p-2 border-gray-200 border rounded-sm"
+              className="p-2 ml-5 border-gray-200 border rounded-sm"
               required
             />
           </div>
@@ -88,6 +90,11 @@ const BooksEdit = () => {
           </button>
         </div>
       </form>
+    </div>
+    <div className="imagepic pt-10">
+        <img src={picone} alt="edit-image" className="pt-10" style={{ width: '800px', height: 'auto' }}/>
+
+    </div>
     </div>
   );
 };

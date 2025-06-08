@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useBooksData } from "../sample_data/useBooksData";
 import { Link } from "react-router-dom";
-import Card from "./../components/Card";
+// import Card from "./../components/Card";
 import Issuelog from "./IssueLog";
 import axios from "axios";
+import BookCard from "../components/BookCard";
 const IssueBook = () => {
   const [bookInput, setBookInput] = useState("");
   const [foundedBooks, setFoundedBooks] = useState([]);
@@ -26,16 +27,19 @@ const IssueBook = () => {
     console.log(foundedBooks);
   };
   const handleIssue = (e, id) => {
-    const studentId = prompt("Enter Id:", "0");
-    const numberStudentId = Number.parseInt(studentId); 
+    const studentId = prompt("Enter Student Id:", "0");
+    console.log(studentId);
+    
+    const numberStudentId = Number.parseInt(studentId);
     // useEffect(() => {
     axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/api/books/issue/${id}/${numberStudentId}`)
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/books/issue/${id}/${numberStudentId}`
+      )
       .then((res) => {
         // e.target.innerText += " " + res.data.available_copies;
-        window.alert("Success")
+        window.alert("Success");
         console.log(res.data);
-
       })
       .catch((err) => console.error(err));
 
@@ -66,12 +70,13 @@ const IssueBook = () => {
           </form>
         </div>
         {foundedBooks.length > 0 ? (
-          <ul className="grid grid-flow-row justify-center gap-2">
+          <ul className="grid grid-cols-2 grid-flow-row justify-center gap-2">
             {foundedBooks.map((book) => (
-              <li className="rounded-md p-4 bg-blue-100 border-3" key={book.id}>
-                <Card
+              <li className="rounded-md p-4 border-3" key={book.id}>
+                <BookCard
                   key={book.id}
                   data={{
+                    id: book.id,
                     title: book.title,
                     author: book.author,
                     category: book.category,
@@ -79,8 +84,9 @@ const IssueBook = () => {
                     total_copies: book.total_copies,
                     available_copies: book.available_copies,
                   }}
+                  onIssue
+                  handleIssueBook={handleIssue}
                 />
-                <button onClick={(e) => handleIssue(e, book.id)}>Issue</button>
               </li>
             ))}
           </ul>
@@ -94,7 +100,7 @@ const IssueBook = () => {
           Want to return book?
         </Link>
       </div>
-      <p>Log:</p>
+      <p>Book history:</p>
       <Issuelog />
     </div>
   );

@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-//                title: book.title,
+//                title : book.title,
 //               author: book.author,
 //               category: book.category,
 //               isbn: book.isbn,
@@ -59,62 +59,88 @@ export default function AddBook() {
         className="grid grid-cols-2 gap-4"
         onSubmit={(e) => handleAddBook(e)}
       >
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="p-2 border rounded"
-        />
-        <input
-          type="text"
-          value={author}
-          placeholder="Author"
-          onChange={(e) => setAuthor(e.target.value)}
-          className="p-2 border rounded"
-        />
-        <input
-          type="text"
-          onChange={(e) => setIsbn(e.target.value)}
-          placeholder="ISBN"
-          value={isbn}
-          className="p-2 border rounded"
-        />
-        <input
-          type="text"
-          placeholder="Category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="p-2 border rounded"
-        />
-        <input
-          type="number"
-          placeholder="Total Copies"
-          value={total_copies}
-          onChange={(e) => setTotal_copies(parseInt(e.target.value))}
-          className="p-2 border rounded"
-        />
-        <input
-          type="number"
-          placeholder="Price"
-          value={price}
-          onChange={(e) => setPrice(parseInt(e.target.value))}
-          className="p-2 border rounded"
-        />
-        <input
-          type="number"
-          placeholder="Available Copies"
-          value={available_copies}
-          onChange={(e) => setAvailable_copies(parseInt(e.target.value))}
-          className="p-2 border rounded"
-        />
+        <div>
+          <label>Title:</label>
+
+          <input
+            type="text"
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="p-2 ml-5 border rounded"
+          />
+        </div>
+        <div>
+          <label>Author :</label>
+
+          <input
+            type="text"
+            value={author}
+            placeholder="Author"
+            onChange={(e) => setAuthor(e.target.value)}
+            className="p-2 ml-5 border rounded"
+          />
+        </div>
+        <div>
+          <label>ISBN :</label>
+          <input
+            type="text"
+            onChange={(e) => setIsbn(e.target.value)}
+            placeholder="ISBN"
+            value={isbn}
+            className="p-2 ml-5 border rounded"
+          />
+        </div>
+        <div>
+          <label>Category :</label>
+          <input
+            type="text"
+            placeholder="Category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="p-2 ml-5 border rounded"
+          />
+        </div>
+        <div>
+          <label>Total Copies :</label>
+          <input
+            type="number"
+            placeholder="Total Copies"
+            value={total_copies}
+            onChange={(e) => setTotal_copies(parseInt(e.target.value))}
+            className="p-2 ml-5 border rounded"
+          />
+        </div>
+        <div>
+          <label>Price  : </label>
+          <input
+            type="number"
+            placeholder="Price"
+            value={price}
+            onChange={(e) => setPrice(parseInt(e.target.value))}
+            className="p-2 ml-5 border rounded "
+          />
+        </div>
+
+        <div>
+          <label>Available Copies :</label>
+          <input
+            type="number"
+            placeholder="Available Copies"
+            value={available_copies}
+            onChange={(e) => setAvailable_copies(parseInt(e.target.value))}
+            className="p-2 ml-5 border rounded"
+          />
+        </div>
+      </form>
+      <div className="text-center mt-5">
         <button
           type="submit"
-          className="bg-green-600 text-white px-4 py-2 rounded col-span-2"
+          className="bg-green-600 text-white px-4 py-2  rounded col-span-2"
         >
           Save Book
         </button>
-      </form>
+      </div>
     </div>
   );
 }

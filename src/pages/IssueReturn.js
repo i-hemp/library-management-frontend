@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useBooksData } from "../sample_data/useBooksData";
-import Card from "../components/Card";
+// import Card from "../components/Card";
 import axios from "axios";
+import BookCard from "../components/BookCard";
 
 const IssueReturn = () => {
   const [bookInput, setBookInput] = useState("");
@@ -23,14 +24,17 @@ const IssueReturn = () => {
     console.log(foundedBooks);
   };
   const handleStudentReturn = (bookId) => {
-    const studentId = prompt("Enter Id:", "0");
+    const studentId = prompt("Enter Student Id:", "0");
     const numberStudentId = Number.parseInt(studentId); // fixed variable name
     console.log(`studentID: ${numberStudentId}, bookID: ${bookId}`);
     try {
-      axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/books/return/${bookId}`, {
-        student_id: numberStudentId,
-      });
-      alert("Sucess")
+      axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/books/return/${bookId}`,
+        {
+          student_id: numberStudentId,
+        }
+      );
+      alert("Sucess");
     } catch (err) {
       console.log(err);
     }
@@ -59,12 +63,18 @@ const IssueReturn = () => {
         </form>
       </div>
       {foundedBooks.length > 0 ? (
-        <ul className="grid grid-flow-row justify-center gap-2">
+        <ul className="grid grid-flow-row grid-cols-2 justify-center gap-2">
           {foundedBooks.map((book) => (
-            <li className="rounded-md p-4 bg-blue-100 border-3" key={book.id}>
-              <Card
+            <li
+              className="flex rounded-md p-4 border-3"
+              key={book.id}
+            >
+              <BookCard
+                handleStudentReturn={handleStudentReturn}
+                onReturn
                 key={book.id}
                 data={{
+                  id:book.id,
                   title: book.title,
                   author: book.author,
                   isbn: book.isbn,
@@ -73,9 +83,6 @@ const IssueReturn = () => {
                   available_copies: book.available_copies,
                 }}
               />
-              <button onClick={() => handleStudentReturn(book.id)}>
-                Return Book
-              </button>
             </li>
           ))}
         </ul>

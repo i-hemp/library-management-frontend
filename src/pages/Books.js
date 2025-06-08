@@ -82,8 +82,9 @@ export default function Books() {
         backgroundImage: `url(${picone})`,
       }}
     >
-      <div className="flex pb-5 flex-row items-center justify-between gap-60">
-        <h2 className="text-2xl text-white ml-20 font-bold">Books</h2>
+      <div className="flex pb-5 flex-row items-center justify-between gap-60" style={{width:"100%"}}>
+        <h2 className="text-2xl text-white ml-5 font-bold">Books</h2>
+        <div className="flex">
         <div className="flex flex-row gap-3">
           <input
             type="text"
@@ -95,7 +96,7 @@ export default function Books() {
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="px-3 py-2  rounded-md border border-gray-300 "
+            className="px-3 py-2 mr-5 rounded-md border border-gray-300 "
           >
             <option value="All">All Categories</option>
             {[...new Set(books.map((b) => b.category))].map((cat) => (
@@ -111,11 +112,12 @@ export default function Books() {
         >
           + Add Book
         </Link>
+        </div>
       </div>
 
-      <ul className="grid grid-cols-1 md:grid-cols-1  gap-4 justify-items-center w-full max-w-6xl mx-auto">
+      <ul className="grid grid-cols-2 md:grid-cols-2  gap-4 justify-items-center  mx-auto">
         {filteredBooks.map((book) => (
-          <li className="flex group" key={book.id}>
+          <li className="flex group" style={{width:"100%"}} key={book.id}>
             <BookCard
               data={{
                 id: book.id,

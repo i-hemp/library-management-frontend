@@ -1,7 +1,15 @@
 import React from "react";
 
-const BookCard = ({ data, onEdit, onDelete, onLog }) => {
-  
+const BookCard = ({
+  data,
+  onEdit = () => {},
+  onDelete = () => {},
+  onLog = () => {},
+  onReturn = false,
+  onIssue = false,
+  handleStudentReturn = () => {},
+  handleIssueBook = () => {},
+}) => {
   const titleKey = data?.Title || data?.Name || "Unnamed";
   const firstLetter = titleKey.charAt(0).toUpperCase();
 
@@ -29,26 +37,44 @@ const BookCard = ({ data, onEdit, onDelete, onLog }) => {
         ))}
       </div>
 
-      <div className="ml-6 flex flex-col gap-2 shrink-0">
+      {!onReturn && !onIssue &&(
+        <div className="ml-6 flex flex-col gap-2 shrink-0">
+          <button
+            className="px-3 py-1 text-sm rounded bg-blue-500 text-white hover:bg-blue-600"
+            onClick={onLog}
+          >
+            Check Log
+          </button>
+          <button
+            className="px-3 py-1 text-sm rounded bg-yellow-500 text-white hover:bg-yellow-600"
+            onClick={onEdit}
+          >
+            Edit
+          </button>
+          <button
+            className="px-3 py-1 text-sm rounded bg-red-500 text-white hover:bg-red-600"
+            onClick={onDelete}
+          >
+            Delete
+          </button>
+        </div>
+      )}
+      {onReturn && (
         <button
           className="px-3 py-1 text-sm rounded bg-blue-500 text-white hover:bg-blue-600"
-          onClick={onLog}
+          onClick={() => handleStudentReturn(data.id)}
         >
-          Check Log
+          Return Book
         </button>
-        <button
-          className="px-3 py-1 text-sm rounded bg-yellow-500 text-white hover:bg-yellow-600"
-          onClick={onEdit}
-        >
-          Edit
-        </button>
+      )}
+      {onIssue && (
         <button
           className="px-3 py-1 text-sm rounded bg-red-500 text-white hover:bg-red-600"
-          onClick={onDelete}
+          onClick={(e) => handleIssueBook(e,data.id)}
         >
-          Delete
+          Issue Book
         </button>
-      </div>
+      )}
     </div>
   );
 };
