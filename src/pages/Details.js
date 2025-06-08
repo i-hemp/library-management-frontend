@@ -8,8 +8,7 @@ const DetailPage = () => {
   const { id } = useParams();
   const [issueLog, setIssueLog] = useState([]);
 
-  // const handleLog = (student_id) => {
-  //     console.log(student_id);
+
 
   useEffect(() => {
     axios

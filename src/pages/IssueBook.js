@@ -28,7 +28,6 @@ const IssueBook = () => {
   const handleIssue = (e, id) => {
     const studentId = prompt("Enter Id:", "0");
     const numberStudentId = Number.parseInt(studentId); 
-    //not finished
     // useEffect(() => {
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/api/books/issue/${id}/${numberStudentId}`)
@@ -36,7 +35,6 @@ const IssueBook = () => {
         // e.target.innerText += " " + res.data.available_copies;
         window.alert("Success")
         console.log(res.data);
-      // alert("Now Available:",res.data.available_copies)
 
       })
       .catch((err) => console.error(err));

@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 //               total_copies: book.total_copies,
 //               available_copies: book.available_copies,
 export default function AddBook() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [price, setPrice] = useState("");
@@ -23,28 +23,30 @@ export default function AddBook() {
     e.preventDefault();
     console.log(e);
     try {
-      const res = axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/books/`, {
-        title: title,
-        author: author,
-        isbn: isbn,
-        category: category,
-        total_copies: total_copies,
-        available_copies: available_copies,
-        price:price,
-      });
+      const res = axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/books/`,
+        {
+          title: title,
+          author: author,
+          isbn: isbn,
+          category: category,
+          total_copies: total_copies,
+          available_copies: available_copies,
+          price: price,
+        }
+      );
       console.log("Book added:", res.data);
       alert("Book added successfully!");
 
-      // Clear form after successful submission
       setTitle("");
       setAuthor("");
       setIsbn("");
       setCategory("");
       setTotal_copies(1);
       setAvailable_copies(1);
-      setPrice(0)
-       navigate("/books");
-        window.location.reload();
+      setPrice(0);
+      navigate("/books");
+      window.location.reload();
     } catch (err) {
       console.log(`Error adding book: ${err}`);
       alert("Failed to add book. Check console for errors.");

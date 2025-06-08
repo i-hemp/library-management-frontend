@@ -1,7 +1,6 @@
 import React from "react";
 
 const BookCard = ({data, onEdit, onDelete, onLog }) => {
-                  //data object extra from props
   // const data = {
   //   id: "book.id",
   //   Title: "Aook.title",
@@ -58,26 +57,3 @@ const BookCard = ({data, onEdit, onDelete, onLog }) => {
 };
 
 export default BookCard;
-// import React from "react";
-
-// const BookCard = () => {
-//   const book = {
-//     // id: "book.id",
-//     Title: "Aook.title",
-//     Author: "book.author",
-//     ISBN: "book.isbn",
-//     Category: "book.category",
-//     "Total Copies": "book.total_copies",
-//     "Available Copies": "book.available_copies",
-//   };
-//   const firstLetter = book.Title.toUpperCase().charAt(0);
-//   return (
-//     <>
-//       <div className="flex items-center justify-center w-16 h-16 rounded-full bg-green-500 text-white text-2xl font-bold mr-6">
-//         {firstLetter}
-//       </div>
-//     </>
-//   );
-// };
-
-// export default BookCard;
