@@ -1,15 +1,7 @@
 import React from "react";
 
-const BookCard = ({data, onEdit, onDelete, onLog }) => {
-  // const data = {
-  //   id: "book.id",
-  //   Title: "Aook.title",
-  //   Author: "book.author",
-  //   ISBN: "book.isbn",
-  //   Category: "book.category",
-  //   "Total Copies": "book.total_copies",
-  //   "Available Copies": "book.available_copies",
-  // };
+const BookCard = ({ data, onEdit, onDelete, onLog }) => {
+  
   const titleKey = data?.Title || data?.Name || "Unnamed";
   const firstLetter = titleKey.charAt(0).toUpperCase();
 
@@ -18,21 +10,26 @@ const BookCard = ({data, onEdit, onDelete, onLog }) => {
   );
 
   return (
-    <div className="flex items-center bg-white rounded-xl shadow-md p-4 max-w-3xl">
-      <div className="items-center flex justify-center w-16 h-16 rounded-full bg-gray-500 text-white text-2xl font-bold mr-6">
+    <div className="flex items-center bg-white rounded-xl shadow-md p-4 w-full max-w-3xl">
+      <div
+        className="flex justify-center items-center w-16 h-16 rounded-full bg-gray-500 text-white text-2xl font-bold mr-6 shrink-0"
+        title={titleKey}
+      >
         {firstLetter}
       </div>
 
-      <div className="flex grid grid-cols-2 gap-1 text-sm text-gray-700">
+      <div className="flex-1 grid grid-cols-2 gap-1 text-sm text-gray-700">
         {displayDetails.map((key, index) => (
-          <div key={index} className="flex">
-            <span className="font-semibold mr-1">{key}:</span>
-            <span>{data[key]}</span>
+          <div key={index} className="flex overflow-hidden">
+            <span className="font-semibold mr-1 whitespace-nowrap">{key}:</span>
+            <span className="truncate max-w-[180px] block" title={data[key]}>
+              {data[key]}
+            </span>
           </div>
         ))}
       </div>
 
-      <div className="ml-6 flex flex-col gap-2">
+      <div className="ml-6 flex flex-col gap-2 shrink-0">
         <button
           className="px-3 py-1 text-sm rounded bg-blue-500 text-white hover:bg-blue-600"
           onClick={onLog}
