@@ -49,7 +49,6 @@ npm start
 
 ## Deployment
 
-- **Frontend**: https://librarypage443.netlify.app/
-
+- **URL**: https://library-management-frontend-kohl.vercel.app/
 
 
