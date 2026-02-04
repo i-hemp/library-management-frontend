@@ -19,11 +19,11 @@ export default function AddBook() {
   const [available_copies, setAvailable_copies] = useState(0);
   const [isbn, setIsbn] = useState("");
 
-  const handleAddBook = (e) => {
+  const handleAddBook = async (e) => {
     e.preventDefault();
     console.log(e);
     try {
-      const res = axios.post(
+      const res = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/books/`,
         {
           title: title,
@@ -48,8 +48,14 @@ export default function AddBook() {
       navigate("/books");
       window.location.reload();
     } catch (err) {
-      console.log(`Error adding book: ${err}`);
-      alert("Failed to add book. Check console for errors.");
+      console.log(`Error adding book:`, err);
+
+      // Check if it's a duplicate book error
+      if (err.response && err.response.status === 400) {
+        alert(err.response.data.error || "A book with this title already exists!");
+      } else {
+        alert("Failed to add book. Check console for errors.");
+      }
     }
   };
   return (
@@ -132,14 +138,14 @@ export default function AddBook() {
             className="p-2 ml-5 border rounded"
           />
         </div>
-      <div className="text-center mt-5">
-        <button
-          type="submit"
-          className="bg-green-600 text-white px-4 py-2  rounded col-span-2"
-        >
-          Save Book
-        </button>
-      </div>
+        <div className="text-center mt-5">
+          <button
+            type="submit"
+            className="bg-green-600 text-white px-4 py-2  rounded col-span-2"
+          >
+            Save Book
+          </button>
+        </div>
       </form>
     </div>
   );

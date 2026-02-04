@@ -19,7 +19,7 @@ It provides UI to manage books, students, issue/return transactions, and more.
 Framework: React 
 Styling: TailwindCSS for modern UI components    
 Language: React + Tailwind  
-- **Deployment**: Render (for backend), Netlify (frontend)  
+- **Deployment**: Render (for backend), versel (frontend)  
 
 ## Project Structure
 
