@@ -1,14 +1,19 @@
-import axios from "axios";
+import API from "../api/axios";
 import { useEffect, useState } from "react";
 import Card from "./../components/Card";
+import { useToast } from "../context/ToastContext";
 const Issuelog = () => {
   const [dataIssued, setDataIssued] = useState([]);
+  const { showToast } = useToast();
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/books/issue/logs`)
+    API
+      .get("/books/issue/logs")
       .then((res) => setDataIssued(res.data))
-      .catch((err) => console.error(err));
-  }, []);
+      .catch((err) => {
+        console.error(err);
+        showToast("Failed to fetch global issue logs", "error");
+      });
+  }, [showToast]);
   
   return (
     <div className="  pt-5 px-4 ">

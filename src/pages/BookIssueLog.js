@@ -1,21 +1,24 @@
-import axios from "axios";
+import API from "../api/axios";
 import { useEffect, useState } from "react";
 import Card from "../components/Card";
 import { useParams } from "react-router-dom";
+import { useToast } from "../context/ToastContext";
 
 const BookIssueLog = () => {
   const [dataIssued, setDataIssued] = useState([]);
-const {id}=useParams()
-console.log(id);
+  const { id } = useParams();
+  const { showToast } = useToast();
+  console.log(id);
 
   useEffect(() => {
-
-    axios
-    
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/books/issue/logs/book/${id}`)
+    API
+      .get(`/books/issue/logs/book/${id}`)
       .then((res) => setDataIssued(res.data))
-      .catch((err) => console.error(err));
-  }, [id]);
+      .catch((err) => {
+        console.error(err);
+        showToast("Failed to fetch issue logs", "error");
+      });
+  }, [id, showToast]);
 
   return (
     <div className="text-gray-400 pt-20 px-4 ">

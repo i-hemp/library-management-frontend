@@ -1,5 +1,6 @@
-import axios from "axios";
 import React, { useState } from "react";
+import API from "../api/axios";
+import Toast from "../components/Toast";
 
 export default function AddStudent() {
   const [name, setName] = useState("");
@@ -8,13 +9,14 @@ export default function AddStudent() {
   const [semester, setSemester] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [toast, setToast] = useState(null);
 
   const handleAddStudent = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/students/`,
+      const res = await API.post(
+        "/students/",
         {
           roll_number: rollNumber,
           name: name,
@@ -26,7 +28,7 @@ export default function AddStudent() {
       );
 
       console.log("Student added:", res.data);
-      alert("Student added successfully!");
+      setToast({ message: "Student added successfully!", type: "success" });
 
       // Clear form
       setName("");
@@ -37,12 +39,25 @@ export default function AddStudent() {
       setEmail("");
     } catch (err) {
       console.error("Error adding student:", err);
-      alert("Failed to add student.");
+
+      // Show specific error message from backend
+      if (err.response && err.response.status === 400) {
+        setToast({ message: err.response.data.error, type: "error" });
+      } else {
+        setToast({ message: "Failed to add student.", type: "error" });
+      }
     }
   };
 
   return (
     <div className="p-6 pt-20 px-4 ">
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
       <h2 className="text-2xl font-bold mb-4">Add Student</h2>
       <form className="grid grid-cols-2 gap-4" onSubmit={handleAddStudent}>
         <div>
@@ -105,14 +120,14 @@ export default function AddStudent() {
             className="p-2 border ml-5 rounded"
           />
         </div>
-      <div className="text-center mt-5">
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded col-span-2"
-        >
-          Save Student
-        </button>
-      </div>
+        <div className="text-center mt-5">
+          <button
+            type="submit"
+            className="bg-blue-600 text-white px-4 py-2 rounded col-span-2"
+          >
+            Save Student
+          </button>
+        </div>
       </form>
     </div>
   );

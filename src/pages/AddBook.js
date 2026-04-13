@@ -1,7 +1,8 @@
-import axios from "axios";
 import React from "react";
+import API from "../api/axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Toast from "../components/Toast";
 
 //                title : book.title,
 //               author: book.author,
@@ -18,13 +19,14 @@ export default function AddBook() {
   const [total_copies, setTotal_copies] = useState(0);
   const [available_copies, setAvailable_copies] = useState(0);
   const [isbn, setIsbn] = useState("");
+  const [toast, setToast] = useState(null);
 
   const handleAddBook = async (e) => {
     e.preventDefault();
     console.log(e);
     try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/books/`,
+      const res = await API.post(
+        "/books/",
         {
           title: title,
           author: author,
@@ -36,7 +38,7 @@ export default function AddBook() {
         }
       );
       console.log("Book added:", res.data);
-      alert("Book added successfully!");
+      setToast({ message: "Book added successfully!", type: "success" });
 
       setTitle("");
       setAuthor("");
@@ -45,21 +47,31 @@ export default function AddBook() {
       setTotal_copies(1);
       setAvailable_copies(1);
       setPrice(0);
-      navigate("/books");
-      window.location.reload();
+
+      setTimeout(() => {
+        navigate("/books");
+        window.location.reload();
+      }, 2000);
     } catch (err) {
       console.log(`Error adding book:`, err);
 
       // Check if it's a duplicate book error
       if (err.response && err.response.status === 400) {
-        alert(err.response.data.error || "A book with this title already exists!");
+        setToast({ message: err.response.data.error, type: "error" });
       } else {
-        alert("Failed to add book. Check console for errors.");
+        setToast({ message: "Failed to add book. Check console for errors.", type: "error" });
       }
     }
   };
   return (
     <div className="p-6 pt-20 px-4 ">
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
       <h2 className="text-2xl font-bold mb-4">Add Book</h2>
       <form
         className="grid grid-cols-2 gap-4"

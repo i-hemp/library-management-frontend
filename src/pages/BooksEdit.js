@@ -1,11 +1,13 @@
-import axios from "axios";
+import API from "../api/axios";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import picone from "./../assets/new_images/vecteezy_person-man-holding-pen-write-plan-or-idea-on-book-with_10111102.jpg";
+import { useToast } from "../context/ToastContext";
 
 const BooksEdit = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const [bookInfo, setBookInfo] = useState({
     title: "",
@@ -17,11 +19,14 @@ const BooksEdit = () => {
   });
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/books/${id}`)
+    API
+      .get(`/books/${id}`)
       .then((res) => setBookInfo(res.data))
-      .catch((err) => console.error(err));
-  }, [id]);
+      .catch((err) => {
+        console.error(err);
+        showToast("Failed to fetch book info", "error");
+      });
+  }, [id, showToast]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,14 +38,19 @@ const BooksEdit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .put(`${process.env.REACT_APP_BACKEND_URL}/api/books/put/${id}`, bookInfo)
+    API
+      .put(`/books/put/${id}`, bookInfo)
       .then(() => {
-        alert("Book updated successfully\nYou can close window..!");
-        handleCancel();
-        window.location.reload();
+        showToast("Book updated successfully");
+        setTimeout(() => {
+          handleCancel();
+          window.location.reload();
+        }, 1500);
       })
-      .catch((err) => console.error("Update failed:", err));
+      .catch((err) => {
+        console.error("Update failed:", err);
+        showToast("Update failed", "error");
+      });
   };
 
   const handleCancel = () => {

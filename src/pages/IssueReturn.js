@@ -1,14 +1,16 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useBooksData } from "../sample_data/useBooksData";
 // import Card from "../components/Card";
-import axios from "axios";
+import API from "../api/axios";
 import BookCard from "../components/BookCard";
+import { useToast } from "../context/ToastContext";
 
 const IssueReturn = () => {
   const [bookInput, setBookInput] = useState("");
   const books = useBooksData();
   const [foundedBooks, setFoundedBooks] = useState([]);
+  const { showToast } = useToast();
   // const student_id = 1;
 
   const find_book = (e) => {
@@ -25,16 +27,28 @@ const IssueReturn = () => {
   };
   const handleStudentReturn = (bookId) => {
     const studentId = prompt("Enter Student Id:", "0");
-    const numberStudentId = Number.parseInt(studentId); // fixed variable name
+    if (!studentId || studentId.trim() === "") {
+      showToast("Student ID is required", "error");
+      return;
+    }
+    const numberStudentId = Number.parseInt(studentId);
+    if (isNaN(numberStudentId)) {
+      showToast("Please enter a valid student ID number", "error");
+      return;
+    }
     console.log(`studentID: ${numberStudentId}, bookID: ${bookId}`);
     try {
-      axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/books/return/${bookId}`,
+      API.post(
+        `/books/return/${bookId}`,
         {
           student_id: numberStudentId,
         }
-      );
-      alert("Sucess");
+      ).then(() => {
+        showToast("Success");
+      }).catch((err) => {
+        console.error(err);
+        showToast("Failed to return book", "error");
+      });
     } catch (err) {
       console.log(err);
     }
@@ -74,7 +88,7 @@ const IssueReturn = () => {
                 onReturn
                 key={book.id}
                 data={{
-                  id:book.id,
+                  id: book.id,
                   title: book.title,
                   author: book.author,
                   isbn: book.isbn,
@@ -87,7 +101,7 @@ const IssueReturn = () => {
           ))}
         </ul>
       ) : (
-        console.log(foundedBooks)
+        <p className="text-gray-500">No books found. Try a different search.</p>
       )}
       <Link
         to={"/issue"}

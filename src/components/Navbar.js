@@ -29,6 +29,9 @@ function Navbar() {
         <Link className={linkClass("/return")} to="/return">
           Return
         </Link>
+        <Link className={linkClass("/fines")} to="/fines">
+          Fines
+        </Link>
       </div>
     </nav>
   );

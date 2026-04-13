@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 // import IssueLog from "./IssueLog";
-import axios from "axios";
+import API from "../api/axios";
 import Card from "../components/Card";
+import { useToast } from "../context/ToastContext";
 
 const DetailPage = () => {
   const { id } = useParams();
   const [issueLog, setIssueLog] = useState([]);
-
-
+  const { showToast } = useToast();
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/books/issue/logs/${id}`)
+    API
+      .get(`/books/issue/logs/${id}`)
       .then((res) => {
         setIssueLog(res.data);
-        // console.log(issueLog);
       })
-      .catch((err) => console.error(err));
-  }, [id, issueLog]);
+      .catch((err) => {
+        console.error(err);
+        showToast("Failed to fetch student issue history", "error");
+      });
+  }, [id, showToast]);
 
   return (
     <div className="p-4  pt-20 px-4 ">

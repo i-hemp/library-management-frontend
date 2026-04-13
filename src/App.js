@@ -14,22 +14,17 @@ import StudentsEdit from "./pages/StudentsEdit";
 import BookIssueLog from "./pages/BookIssueLog";
 import BooksEdit from "./pages/BooksEdit";
 import BookCard from "./components/BookCard";
+import { ToastProvider } from "./context/ToastContext";
+import Fines from "./pages/Fines";
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen bg-grey-50">
+    <ToastProvider>
+      <Router>
+      <div className="min-h-screen bg-gray-50">
         <Navbar />
         <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <Navbar />
-                <Dashboard />
-              </>
-            }
-          />
+          <Route path="/" element={<Dashboard />}/>
           <Route path="/books" element={<Books />} />
           <Route path="/books/add" element={<AddBook />} />
           <Route path="/booklog/:id" element={<BookIssueLog />} />
@@ -39,14 +34,14 @@ function App() {
           <Route path="/students/add" element={<AddStudent />} />
           <Route path="/issue" element={<IssueBook />} />
           <Route path="/return" element={<IssueReturn />} />
-          <Route path="/issue" element={<IssueBook />} />
-          <Route path="/return" element={<IssueReturn />} />
           <Route path="/images" element={<ImageScroller />} />
           <Route path="/logdetails/:id" element={<Details />} />
           <Route path="/test" element={<BookCard />} />
+          <Route path="/fines" element={<Fines />} />
         </Routes>
       </div>
     </Router>
+    </ToastProvider>
   );
 }
 

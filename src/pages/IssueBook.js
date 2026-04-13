@@ -1,14 +1,16 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useBooksData } from "../sample_data/useBooksData";
 import { Link } from "react-router-dom";
-// import Card from "./../components/Card";
 import Issuelog from "./IssueLog";
-import axios from "axios";
+import API from "../api/axios";
 import BookCard from "../components/BookCard";
+import { useToast } from "../context/ToastContext";
+
 const IssueBook = () => {
   const [bookInput, setBookInput] = useState("");
   const [foundedBooks, setFoundedBooks] = useState([]);
   const books = useBooksData();
+  const { showToast } = useToast();
 
   const find_book = (e) => {
     e.preventDefault();
@@ -29,19 +31,29 @@ const IssueBook = () => {
   const handleIssue = (e, id) => {
     const studentId = prompt("Enter Student Id:", "0");
     console.log(studentId);
-    
+    if (!studentId || studentId.trim() === "") {
+      showToast("Student ID is required", "error");
+      return;
+    }
     const numberStudentId = Number.parseInt(studentId);
+    if (isNaN(numberStudentId)) {
+      showToast("Please enter a valid student ID number", "error");
+      return;
+    }
     // useEffect(() => {
-    axios
+    API
       .post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/books/issue/${id}/${numberStudentId}`
+        `/books/issue/${id}/${numberStudentId}`
       )
       .then((res) => {
         // e.target.innerText += " " + res.data.available_copies;
-        window.alert("Success");
+        showToast("Book issued successfully!");
         console.log(res.data);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        showToast("Failed to issue book", "error");
+      });
 
     // },[]);
   };
@@ -91,7 +103,7 @@ const IssueBook = () => {
             ))}
           </ul>
         ) : (
-          console.log(foundedBooks)
+          <p className="text-gray-500">No books found. Try a different search.</p>
         )}
         <Link
           to={"/return"}
